@@ -1,0 +1,7 @@
+# name: benchmark/ssb/benchmarks/sf1/q3.3.benchmark
+# description: Run query 3.3 from the SSB benchmark
+# group: [ssb]
+
+template benchmark/ssb/ssb.benchmark.in
+QUERY_NUMBER=3.3
+SCALING_FACTOR=1
