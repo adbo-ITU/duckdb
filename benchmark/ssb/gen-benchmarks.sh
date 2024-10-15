@@ -1,5 +1,41 @@
 #!/bin/bash
 
+# Assumes that you have the SSB data in the `data` directory and the queries in the `queries` directory
+#
+# For example, before running this file, you have these files:
+# ├── queries
+# │   ├── q1.1.sql
+# │   ├── q1.2.sql
+# │   ├── q4.2.sql
+# │   └── ...
+# ├── data
+# │   ├── sf1
+# │   │   ├── customer.tbl
+# │   │   ├── date.tbl
+# │   │   ├── lineorder.tbl
+# │   │   ├── part.tbl
+# │   │   └── supplier.tbl
+# │   └── sf10
+# │       ├── customer.tbl
+# │       └── ...
+# └── ssb.benchmark.in
+#
+# This script will then generate all the benchmark files for the SSB benchmark, i.e.:
+# ├── benchmarks
+# │   ├── sf1
+# │   │   ├── q1.1.benchmark
+# │   │   ├── q1.2.benchmark
+# │   │   ├── q1.3.benchmark
+# │   │   └── ...
+# │   └── sf10
+# │       ├── q1.1.benchmark
+# │       ├── q1.2.benchmark
+# │       ├── q1.3.benchmark
+# │       └── ...
+# └── init
+#     ├── load-ssb-sf1.sql
+#     └── load-ssb-sf10.sql
+
 for sf_dir in ./benchmark/ssb/data/*; do
   sf_dir_name=$(basename $sf_dir)
   scaling_factor="${sf_dir_name#"sf"}"
