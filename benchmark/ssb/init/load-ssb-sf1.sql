@@ -81,8 +81,8 @@ CREATE TABLE lineorder
     PRIMARY KEY (lo_orderkey, lo_linenumber)
 );
 
-COPY part FROM 'benchmark/ssb/data/sf1/part.csv';
-COPY supplier FROM 'benchmark/ssb/data/sf1/supplier.csv';
-COPY customer FROM 'benchmark/ssb/data/sf1/customer.csv';
-COPY date FROM 'benchmark/ssb/data/sf1/date.csv';
-COPY lineorder FROM 'benchmark/ssb/data/sf1/lineorder.csv';
+COPY part FROM 'benchmark/ssb/data/sf1/part.tbl';
+COPY supplier FROM 'benchmark/ssb/data/sf1/supplier.tbl';
+COPY customer FROM 'benchmark/ssb/data/sf1/customer.tbl';
+COPY date FROM 'benchmark/ssb/data/sf1/date.tbl';
+COPY lineorder FROM 'benchmark/ssb/data/sf1/lineorder.tbl';
