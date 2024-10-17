@@ -1,0 +1,8 @@
+# name: benchmark/ssb/benchmarks/sf1/q4.2-t1.benchmark
+# description: Run query 4.2 from the SSB benchmark with scale factor 1 and 1 threads
+# group: [ssb]
+
+template benchmark/ssb/ssb.benchmark.in
+QUERY_NUMBER=4.2
+SCALING_FACTOR=1
+THREADS=1

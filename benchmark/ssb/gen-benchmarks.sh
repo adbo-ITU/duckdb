@@ -38,16 +38,16 @@
 
 threads=(1 4 8)
 
-for threads in "${threads[@]}"; do
-  echo "Generating queries for $threads threads..."
+for thread in "${threads[@]}"; do
+  echo "Generating queries for $thread threads..."
 
-  mkdir -p "./benchmark/ssb/queries/threads-$threads"
+  mkdir -p "./benchmark/ssb/queries/threads-$thread"
 
   for query_file in ./benchmark/ssb/queries/*.sql; do
       filename=$(basename $query_file)
 
-      echo "pragma threads=$threads;" > "./benchmark/ssb/queries/threads-$threads/$filename"
-      cat $query_file >> "./benchmark/ssb/queries/threads-$threads/$filename"
+      echo "pragma threads=$thread;" > "./benchmark/ssb/queries/threads-$thread/$filename"
+      cat $query_file >> "./benchmark/ssb/queries/threads-$thread/$filename"
   done
 done
 
@@ -58,20 +58,20 @@ for sf_dir in ./benchmark/ssb/data/*; do
   for query_file in ./benchmark/ssb/queries/*.sql; do
     query_number=$(echo $query_file | awk -F'[/q.]' '{print $(NF-3) "." $(NF-2)}')
 
-    for threads in "${threads[@]}"; do
-      echo "Generating benchmark $query_number for scaling factor $scaling_factor with $threads threads..."
+    for thread in "${threads[@]}"; do
+      echo "Generating benchmark $query_number for scaling factor $scaling_factor with $thread threads..."
 
-      bench_file="# name: benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$threads.benchmark
-# description: Run query $query_number from the SSB benchmark with scale factor $scaling_factor and $threads threads
+      bench_file="# name: benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$thread.benchmark
+# description: Run query $query_number from the SSB benchmark with scale factor $scaling_factor and $thread threads
 # group: [ssb]
 
 template benchmark/ssb/ssb.benchmark.in
 QUERY_NUMBER=$query_number
 SCALING_FACTOR=$scaling_factor
-THREADS=$threads"
+THREADS=$thread"
 
       mkdir -p "./benchmark/ssb/benchmarks/sf$scaling_factor"
-      echo "$bench_file" > "./benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$threads.benchmark"
+      echo "$bench_file" > "./benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$thread.benchmark"
     done
   done
 

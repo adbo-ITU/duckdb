@@ -1,0 +1,8 @@
+# name: benchmark/ssb/benchmarks/sf100/q4.3-t8.benchmark
+# description: Run query 4.3 from the SSB benchmark with scale factor 100 and 8 threads
+# group: [ssb]
+
+template benchmark/ssb/ssb.benchmark.in
+QUERY_NUMBER=4.3
+SCALING_FACTOR=100
+THREADS=8
