@@ -36,6 +36,21 @@
 #     ├── load-ssb-sf1.sql
 #     └── load-ssb-sf10.sql
 
+threads=(1 4 8)
+
+for threads in "${threads[@]}"; do
+  echo "Generating queries for $threads threads..."
+
+  mkdir -p "./benchmark/ssb/queries/threads-$threads"
+
+  for query_file in ./benchmark/ssb/queries/*.sql; do
+      filename=$(basename $query_file)
+
+      echo "pragma threads=$threads;" > "./benchmark/ssb/queries/threads-$threads/$filename"
+      cat $query_file >> "./benchmark/ssb/queries/threads-$threads/$filename"
+  done
+done
+
 for sf_dir in ./benchmark/ssb/data/*; do
   sf_dir_name=$(basename $sf_dir)
   scaling_factor="${sf_dir_name#"sf"}"
@@ -43,18 +58,21 @@ for sf_dir in ./benchmark/ssb/data/*; do
   for query_file in ./benchmark/ssb/queries/*.sql; do
     query_number=$(echo $query_file | awk -F'[/q.]' '{print $(NF-3) "." $(NF-2)}')
 
-    echo "Generating query $query_number for scaling factor $scaling_factor..."
+    for threads in "${threads[@]}"; do
+      echo "Generating benchmark $query_number for scaling factor $scaling_factor with $threads threads..."
 
-    bench_file="# name: benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number.benchmark
-# description: Run query $query_number from the SSB benchmark
+      bench_file="# name: benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$threads.benchmark
+# description: Run query $query_number from the SSB benchmark with scale factor $scaling_factor and $threads threads
 # group: [ssb]
 
 template benchmark/ssb/ssb.benchmark.in
 QUERY_NUMBER=$query_number
-SCALING_FACTOR=$scaling_factor"
+SCALING_FACTOR=$scaling_factor
+THREADS=$threads"
 
-    mkdir -p "./benchmark/ssb/benchmarks/sf$scaling_factor"
-    echo "$bench_file" > "./benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number.benchmark"
+      mkdir -p "./benchmark/ssb/benchmarks/sf$scaling_factor"
+      echo "$bench_file" > "./benchmark/ssb/benchmarks/sf$scaling_factor/q$query_number-t$threads.benchmark"
+    done
   done
 
   echo "Generating loader file for scaling factor $scaling_factor..."

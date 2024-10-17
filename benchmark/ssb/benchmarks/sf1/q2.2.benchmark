@@ -1,7 +1,0 @@
-# name: benchmark/ssb/benchmarks/sf1/q2.2.benchmark
-# description: Run query 2.2 from the SSB benchmark
-# group: [ssb]
-
-template benchmark/ssb/ssb.benchmark.in
-QUERY_NUMBER=2.2
-SCALING_FACTOR=1

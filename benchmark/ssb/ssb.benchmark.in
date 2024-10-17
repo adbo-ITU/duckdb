@@ -2,16 +2,16 @@
 # description: ${DESCRIPTION}
 # group: [ssb]
 
-name q${QUERY_NUMBER}_${SCALING_FACTOR}
+name q${QUERY_NUMBER}_sf${SCALING_FACTOR}_threads${THREADS}
 group ssb
-subgroup sf${SCALING_FACTOR}
+subgroup sf${SCALING_FACTOR}_threads${THREADS}
 
 cache ssb_sf${SCALING_FACTOR}.duckdb
 
 # TODO: duckdb doesn't support multiple load steps, so each file duplicates the same create-schema step
 load benchmark/ssb/init/load-ssb-sf${SCALING_FACTOR}.sql
 
-run benchmark/ssb/queries/q${QUERY_NUMBER}.sql
+run benchmark/ssb/queries/threads-${THREADS}/q${QUERY_NUMBER}.sql
 
 # TODO: Want to verify results?
 # result I
