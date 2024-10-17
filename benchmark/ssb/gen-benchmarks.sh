@@ -10,13 +10,13 @@
 # │   └── ...
 # ├── data
 # │   ├── sf1
-# │   │   ├── customer.tbl
-# │   │   ├── date.tbl
-# │   │   ├── lineorder.tbl
-# │   │   ├── part.tbl
-# │   │   └── supplier.tbl
+# │   │   ├── customer.csv
+# │   │   ├── date.csv
+# │   │   ├── lineorder.csv
+# │   │   ├── part.csv
+# │   │   └── supplier.csv
 # │   └── sf10
-# │       ├── customer.tbl
+# │       ├── customer.csv
 # │       └── ...
 # └── ssb.benchmark.in
 #
@@ -160,11 +160,11 @@ CREATE TABLE lineorder
     PRIMARY KEY (lo_orderkey, lo_linenumber)
 );
 
-COPY part FROM 'benchmark/ssb/data/sf$scaling_factor/part.tbl';
-COPY supplier FROM 'benchmark/ssb/data/sf$scaling_factor/supplier.tbl';
-COPY customer FROM 'benchmark/ssb/data/sf$scaling_factor/customer.tbl';
-COPY date FROM 'benchmark/ssb/data/sf$scaling_factor/date.tbl';
-COPY lineorder FROM 'benchmark/ssb/data/sf$scaling_factor/lineorder.tbl';"
+COPY part FROM 'benchmark/ssb/data/sf$scaling_factor/part.csv';
+COPY supplier FROM 'benchmark/ssb/data/sf$scaling_factor/supplier.csv';
+COPY customer FROM 'benchmark/ssb/data/sf$scaling_factor/customer.csv';
+COPY date FROM 'benchmark/ssb/data/sf$scaling_factor/date.csv';
+COPY lineorder FROM 'benchmark/ssb/data/sf$scaling_factor/lineorder.csv';"
 
     mkdir -p "./benchmark/ssb/init"
     echo "$load_file" > "./benchmark/ssb/init/load-ssb-sf$scaling_factor.sql"
