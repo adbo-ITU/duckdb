@@ -6,10 +6,12 @@ name q${QUERY_NUMBER}_sf${SCALING_FACTOR}_threads${THREADS}
 group ssb
 subgroup sf${SCALING_FACTOR}_threads${THREADS}
 
+require ssb
+
 cache ssb_sf${SCALING_FACTOR}.duckdb
 
-# TODO: duckdb doesn't support multiple load steps, so each file duplicates the same create-schema step
-load benchmark/ssb/init/load-ssb-sf${SCALING_FACTOR}.sql
+load
+CALL ssbgen(sf = ${SCALING_FACTOR});
 
 run benchmark/ssb/queries/threads-${THREADS}/q${QUERY_NUMBER}.sql
 
