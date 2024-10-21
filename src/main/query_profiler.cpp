@@ -645,9 +645,18 @@ static string StringifyAndFree(yyjson_mut_doc *doc, yyjson_mut_val *object) {
 }
 
 string QueryProfiler::ToJSON() const {
+	map<string, string> no_extra_fields;
+	return ToExtendedJSON(no_extra_fields);
+}
+
+string QueryProfiler::ToExtendedJSON(const map<string, string> &extra_fields) const {
 	auto doc = yyjson_mut_doc_new(nullptr);
 	auto result_obj = yyjson_mut_obj(doc);
 	yyjson_mut_doc_set_root(doc, result_obj);
+
+	for (auto &key_value : extra_fields) {
+	 	yyjson_mut_obj_add_str(doc, result_obj, key_value.first.c_str(), key_value.second.c_str());
+	}
 
 	if (!IsEnabled()) {
 		yyjson_mut_obj_add_str(doc, result_obj, "result", "disabled");

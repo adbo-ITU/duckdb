@@ -152,6 +152,7 @@ public:
 	static string JSONSanitize(const string &text);
 	static string DrawPadded(const string &str, idx_t width);
 	DUCKDB_API string ToJSON() const;
+	DUCKDB_API string ToExtendedJSON(const map<string, string> &extra_fields) const;
 	DUCKDB_API void WriteToFile(const char *path, string &info) const;
 
 	idx_t OperatorSize() {
